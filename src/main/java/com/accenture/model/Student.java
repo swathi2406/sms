@@ -8,17 +8,9 @@ import javax.persistence.Id;
 
 @Entity
 public class Student {
-	public Student() {
-	}
-
 	@Id
 	@GeneratedValue
 	private int sid;
-	@Override
-	public String toString() {
-		return "Student [sid=" + sid + ", name=" + name + ", age=" + age + ", dob=" + dob + ", grade=" + grade
-				+ ", number=" + number + "]";
-	}
 
 	private String name;
 	private int age;
@@ -61,6 +53,11 @@ public class Student {
 	public void setNumber(String number) {
 		this.number = number;
 	}
+	@Override
+	public String toString() {
+		return "Student [sid=" + sid + ", name=" + name + ", age=" + age + ", dob=" + dob + ", grade=" + grade
+				+ ", number=" + number + "]";
+	}
 	public Student(int sid, String name, int age, Date dob, int grade, String number) {
 		super();
 		this.sid = sid;
@@ -69,6 +66,8 @@ public class Student {
 		this.dob = dob;
 		this.grade = grade;
 		this.number = number;
+	}
+	public Student() {
 	}
 	
 }

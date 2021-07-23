@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,16 +48,24 @@ public class StudentController {
 		return studentService.getStudentByName(name);
 	}
 	@GetMapping("/student/show/sid/{sid}")
-	public Student getStudentById(@PathVariable int sid)
+	public ResponseEntity<?> getStudentById(@PathVariable int sid)
 	{
-		return studentService.getStudentById(sid);
+		return ResponseEntity.ok(studentService.getStudentById(sid));
 	}
-	@PutMapping("/student/update/id/{sid}")
+	@PutMapping("/student/update/sid/{sid}")
 	public ResponseEntity<?> updateStudent(@PathVariable int sid, @RequestBody Student student)
 	{
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{sid}").buildAndExpand(student.getSid()).toUri();
-		studentService.getStudentById(sid);
-		return ResponseEntity.ok().body("Updated the details");
+		studentService.updateStudent(sid, student);
+		return ResponseEntity.ok().body("Updated the details Successfully!Go back to the list to see the changes!");
 		
+	}
+	@DeleteMapping("/student/delete/sid/{sid}")
+	public ResponseEntity<?> deleteStudent(@PathVariable int sid)
+	{
+		Student student = new Student();
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{sid}").buildAndExpand(student.getSid()).toUri();
+		studentService.deleteStudent(sid);
+		return ResponseEntity.ok().body("Deleted Successfully! Go back to the list to see the changes!");
 	}
 }

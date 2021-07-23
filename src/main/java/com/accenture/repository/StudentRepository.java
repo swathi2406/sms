@@ -10,5 +10,5 @@ import com.accenture.model.Student;
 public interface StudentRepository extends JpaRepository<Student, Integer> {
 
 	List<Student> findAllByNameStartingWith(String Name);
-	List<Student> findAllByAgeBetween(int min, int max);
+//	List<Student> findAllByAgeBetween(int min, int max);
 }

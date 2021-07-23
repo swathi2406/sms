@@ -2,11 +2,13 @@ package com.accenture.service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 //import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import com.accenture.model.Student;
 import com.accenture.repository.StudentRepository;
@@ -32,11 +34,18 @@ public class StudentService {
 		List<Student> filtered = studentRepository.findAllByNameStartingWith(Name);
 		return filtered;
 	}
-	public Student getStudentById(int id)
+	public Optional<Student> getStudentById(int sid)
 	{
-		Student student = studentRepository.getById(id);
-		return student;
+		Optional<Student> st  = studentRepository.findById(sid);
+				return st;
+		
 	}
+//	public Employee getEmployee(int empid) {
+//	Employee emp = employeeRepository
+//			.findById(empid)
+//			.orElseThrow(EmployeeNotFoundException::new);
+//	return emp;
+//}
 	public void updateStudent(int sid, Student student)
 	{
 		getStudentById(sid);
