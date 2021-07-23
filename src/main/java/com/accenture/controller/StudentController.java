@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.accenture.exception.StudentIdMismatch;
 import com.accenture.model.Student;
 
 import com.accenture.service.StudentService;
@@ -53,8 +56,12 @@ public class StudentController {
 		return ResponseEntity.ok(studentService.getStudentById(sid));
 	}
 	@PutMapping("/student/update/sid/{sid}")
-	public ResponseEntity<?> updateStudent(@PathVariable int sid, @RequestBody Student student)
+	public ResponseEntity<?> updateStudent(@PathVariable int sid, @Valid @RequestBody Student student)
 	{
+		if(sid !=student.getSid())
+		{
+			throw new StudentIdMismatch();
+		}
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{sid}").buildAndExpand(student.getSid()).toUri();
 		studentService.updateStudent(sid, student);
 		return ResponseEntity.ok().body("Updated the details Successfully!Go back to the list to see the changes!");
